@@ -98,9 +98,7 @@ NS -> E: Send push notification
 
 ```plantuml
 @startuml
-node "User Device" {
-  component "Mobile App"
-}
+
 
 node "Kubernetes Cluster" {
 
