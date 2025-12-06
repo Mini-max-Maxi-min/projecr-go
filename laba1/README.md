@@ -110,10 +110,9 @@ Workout Tracker — це розподілена система, що склад�
 
 ```plantuml
 @startuml
-actor "Mobile App" as Mobile
-actor "Web App / Coach" as Web
-actor "Wearable / External Service" as Wear
-actor "Push/Email Provider" as Notify
+actor "telegram bot" as bot
+
+ actor "Push/Email Provider" as Notify
 rectangle "Workout Tracker System" {
   component "API Gateway" as API
   component "Auth Service" as Auth
@@ -122,15 +121,13 @@ rectangle "Workout Tracker System" {
   component "Notification Service" as Notif
   database "Primary DB" as DB
 }
-Mobile --> API : REST/GraphQL
-Web --> API : REST/GraphQL
-Wear --> API : Webhook / OAuth
-API --> Auth : auth
+bot --> API 
+ API --> Auth : auth
 API --> Workout : CRUD
 Workout --> DB : read/write
 Analytics --> DB : read
 Workout --> Notif : events
-Notif --> Notify : send push/email
+Notif --> Notify : send push
 @enduml
 ```
 
@@ -143,7 +140,7 @@ Notif --> Notify : send push/email
 left to right direction
 actor User
 actor Coach
-actor Admin
+
 rectangle "Workout Tracker" {
   User -- (Register / Login)
   User -- (Create training session)
@@ -152,8 +149,7 @@ rectangle "Workout Tracker" {
   Coach -- (Create training plan)
   Coach -- (Assign plan to user)
   Coach -- (View trainee progress)
-  Admin -- (Manage users)
-  Admin -- (View system metrics)
+
   (Create training session) .> (View progress) : extends
 }
 @enduml
